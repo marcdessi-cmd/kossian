@@ -633,7 +633,205 @@ if (typeof window !== 'undefined') {
 }
 
 /* ==========================================================================
-   4. Main Application Initialization
+   4. Altar of Light Quote Generator & Divine Light Flare Engine
+   ========================================================================== */
+
+/**
+ * Archive of Kossian's battle cries, paladin oaths, and holy incantations.
+ * Character: Kossian, Male Paladin (Retribution/Holy) of Lightbringer-EU.
+ */
+const KOSSIAN_QUOTES = [
+    {
+        quote: "Where shadow looms, the Holy Light shines brightest. Stand firm, champions of the Silver Hand!",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "Retribution is not vengeance—it is the unwavering balance of divine justice.",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "By the sacred fires of Hallowfall and the honor of Lightbringer-EU, no darkness shall prevail!",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "With shield uplifted and holy blade drawn, I stand as an eternal bulwark for the Alliance!",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "May the grace of the Light mend your wounds and purge the corruption from this realm.",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "From Northrend's frozen spire to the depths of Khaz Algar, our crusade never falters!",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "Faith is our shield, zeal is our sword. For the Light and for Azeroth!",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "In the face of the abyss, we do not retreat. We shine!",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "A true Paladin does not fight for glory, but to be the beacon in the darkest night.",
+        author: "Kossian, Lightbringer-EU"
+    },
+    {
+        quote: "Let divine judgment strike down those who threaten the innocent and break the peace of Azeroth!",
+        author: "Kossian, Lightbringer-EU"
+    }
+];
+
+let currentQuoteIndex = 0;
+
+/**
+ * Handler for #invoke-btn click event.
+ * Triggers golden radial shockwaves on screen and pedestal, plays spell flash sound,
+ * and updates #quote-display with a non-repeating random quote.
+ */
+function invokeQuote() {
+    // 1. Select next non-repeating randomized quote
+    if (KOSSIAN_QUOTES.length > 1) {
+        let nextIndex;
+        do {
+            nextIndex = Math.floor(Math.random() * KOSSIAN_QUOTES.length);
+        } while (nextIndex === currentQuoteIndex);
+        currentQuoteIndex = nextIndex;
+    }
+
+    const selectedQuote = KOSSIAN_QUOTES[currentQuoteIndex];
+
+    // 2. Play spell flash sound effect
+    if (typeof window.playSpellFlash === 'function') {
+        window.playSpellFlash();
+    }
+
+    // 3. Trigger Screen Divine Flare Overlay
+    const screenOverlay = document.getElementById('divine-flare-overlay');
+    if (screenOverlay) {
+        screenOverlay.classList.remove('active');
+        // Force DOM reflow to restart CSS keyframe animation
+        void screenOverlay.offsetWidth;
+        screenOverlay.classList.add('active');
+    }
+
+    // 4. Trigger Pedestal Golden Shockwave
+    const pedestal = document.getElementById('altar-pedestal');
+    if (pedestal) {
+        pedestal.classList.remove('flare-active');
+        void pedestal.offsetWidth;
+        pedestal.classList.add('flare-active');
+    }
+
+    // 5. Update Quote Display DOM with animated transition
+    const quoteDisplay = document.getElementById('quote-display');
+    if (quoteDisplay) {
+        quoteDisplay.classList.remove('quote-animated');
+        void quoteDisplay.offsetWidth;
+
+        const textEl = quoteDisplay.querySelector('.quote-text');
+        const authorEl = quoteDisplay.querySelector('.quote-author');
+
+        if (textEl) textEl.textContent = `"${selectedQuote.quote}"`;
+        if (authorEl) authorEl.textContent = `— ${selectedQuote.author}`;
+
+        quoteDisplay.classList.add('quote-animated');
+    }
+}
+
+/**
+ * Copies the current inscription to the user's clipboard and triggers feedback toast.
+ */
+function copyCurrentQuote() {
+    const textEl = document.querySelector('#quote-display .quote-text');
+    const authorEl = document.querySelector('#quote-display .quote-author');
+    if (!textEl) return;
+
+    const fullText = authorEl ? `${textEl.textContent} ${authorEl.textContent}` : textEl.textContent;
+
+    const showSuccessToast = () => {
+        const feedbackEl = document.getElementById('altar-feedback');
+        if (feedbackEl) {
+            feedbackEl.textContent = '✨ Quote Copied for the Light!';
+            feedbackEl.classList.remove('active');
+            void feedbackEl.offsetWidth;
+            feedbackEl.classList.add('active');
+
+            setTimeout(() => {
+                feedbackEl.classList.remove('active');
+                setTimeout(() => {
+                    if (!feedbackEl.classList.contains('active')) {
+                        feedbackEl.textContent = '';
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        if (typeof window.playHolyBell === 'function') {
+            window.playHolyBell();
+        }
+    };
+
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(fullText).then(() => {
+            showSuccessToast();
+        }).catch(() => {
+            fallbackCopyText(fullText);
+            showSuccessToast();
+        });
+    } else {
+        fallbackCopyText(fullText);
+        showSuccessToast();
+    }
+}
+
+/**
+ * Fallback clipboard copy for browsers restricting navigator.clipboard API.
+ * @param {string} text 
+ */
+function fallbackCopyText(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+    } catch (e) {
+        console.error('Fallback copy command error:', e);
+    }
+    document.body.removeChild(textArea);
+}
+
+/**
+ * Binds event listeners for Altar of Light buttons (#invoke-btn and #copy-quote-btn).
+ */
+function initAltarControls() {
+    const invokeBtn = document.getElementById('invoke-btn');
+    if (invokeBtn) {
+        invokeBtn.addEventListener('click', invokeQuote);
+    }
+
+    const copyBtn = document.getElementById('copy-quote-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', copyCurrentQuote);
+    }
+}
+
+// Expose public Altar API globally on window object
+if (typeof window !== 'undefined') {
+    window.KOSSIAN_QUOTES = KOSSIAN_QUOTES;
+    window.invokeQuote = invokeQuote;
+    window.copyCurrentQuote = copyCurrentQuote;
+    window.initAltarControls = initAltarControls;
+}
+
+/* ==========================================================================
+   5. Main Application Initialization
    ========================================================================== */
 
 if (typeof document !== 'undefined') {
@@ -642,6 +840,7 @@ if (typeof document !== 'undefined') {
         initAudioControls();
         renderChronicle('all');
         initChronicleFilters();
+        initAltarControls();
     });
 }
 
@@ -650,8 +849,13 @@ if (typeof module !== 'undefined' && module.exports) {
         CAMPAIGN_DATA,
         renderChronicle,
         initChronicleFilters,
-        escapeHTML
+        escapeHTML,
+        KOSSIAN_QUOTES,
+        invokeQuote,
+        copyCurrentQuote,
+        initAltarControls
     };
 }
+
 
 

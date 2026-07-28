@@ -934,6 +934,28 @@ body {
     background: radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.08) 0%, var(--bg-obsidian-card) 70%);
     border: 1px solid var(--border-gold-bright);
     padding: 3.5rem 2.5rem;
+    position: relative;
+    transition: var(--transition-medium);
+}
+
+/* Altar Pedestal Divine Light Radial Shockwave */
+.altar-pedestal.flare-active {
+    animation: pedestalShockwave 0.85s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes pedestalShockwave {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.9), var(--shadow-gilded-hover);
+        border-color: var(--gold-bright);
+    }
+    40% {
+        box-shadow: 0 0 45px 18px rgba(255, 215, 0, 0.6), 0 0 90px 35px rgba(255, 235, 120, 0.3);
+        border-color: var(--gold-radiant);
+    }
+    100% {
+        box-shadow: var(--shadow-gilded);
+        border-color: var(--border-gold-bright);
+    }
 }
 
 .pedestal-header {
@@ -969,12 +991,37 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem;
+    padding: 1.75rem;
     margin-bottom: 2rem;
-    background: rgba(8, 9, 12, 0.7);
+    background: rgba(8, 9, 12, 0.75);
     border: 1px dashed var(--border-gilded);
     border-radius: 4px;
     transition: var(--transition-medium);
+}
+
+.quote-display.quote-animated {
+    animation: quoteGlowFade 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes quoteGlowFade {
+    0% {
+        opacity: 0.2;
+        transform: scale(0.97);
+        border-color: var(--gold-radiant);
+        box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.35);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.01);
+        border-color: var(--gold-bright);
+        box-shadow: inset 0 0 35px rgba(255, 215, 0, 0.45);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        border-color: var(--border-gilded);
+        box-shadow: none;
+    }
 }
 
 .quote-text {
@@ -984,6 +1031,7 @@ body {
     color: var(--parchment-bright);
     line-height: 1.6;
     margin-bottom: 0.75rem;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.15);
 }
 
 .quote-author {
@@ -997,19 +1045,39 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .btn-altar {
-    min-width: 200px;
+    min-width: 210px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-altar:active {
+    transform: scale(0.97);
 }
 
 .altar-feedback {
-    margin-top: 1rem;
+    margin-top: 1.25rem;
     font-family: var(--font-heading);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 700;
     color: var(--gold-radiant);
-    min-height: 1.2rem;
+    min-height: 1.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px var(--gold-glow);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.altar-feedback.active {
+    opacity: 1;
+    animation: toastPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes toastPop {
+    0% { transform: translateY(10px) scale(0.95); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 /* --------------------------------------------------------------------------
