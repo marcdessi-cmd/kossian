@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kossian | Paladin of Lightbringer-EU</title>
+    <meta name="description" content="Official heroic chronicle of Kossian, Retribution and Holy Paladin of Lightbringer-EU. Explore campaign sagas, stats, and the Altar of Light.">
+    <meta name="keywords" content="Kossian, Paladin, World of Warcraft, Lightbringer-EU, Retribution, Holy, Silver Hand, WoW">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700;900&family=IM+Fell+English:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Ambient Visual Effects Overlay -->
+    <div class="vignette-overlay" aria-hidden="true"></div>
+    <div id="divine-flare-overlay" class="divine-flare-overlay" aria-hidden="true"></div>
+
+    <!-- Navigation Header -->
+    <header class="site-header" id="site-header">
+        <div class="nav-container">
+            <a href="#hero" class="nav-brand" aria-label="Kossian Home">
+                <span class="brand-crest">⚔️</span>
+                <span class="brand-text">KOSSIAN</span>
+                <span class="brand-subtext">Lightbringer-EU</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul class="nav-links">
+                    <li><a href="#hero" class="nav-link active">Overview</a></li>
+                    <li><a href="#legend" class="nav-link">Legend & Attributes</a></li>
+                    <li><a href="#chronicle" class="nav-link">Campaign Chronicle</a></li>
+                    <li><a href="#altar" class="nav-link">Altar of Light</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button id="audio-toggle" class="audio-toggle-btn" aria-label="Toggle Holy Soundscape" title="Toggle Sacred Ambient Soundscape">
+                    <span class="audio-icon">🔇</span>
+                    <span class="audio-status">Soundscape: OFF</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <!-- Background Canvas for Golden Embers -->
+            <canvas id="ember-canvas" class="ember-canvas"></canvas>
+
+            <div class="hero-content">
+                <div class="gilded-badge animate-fade-down">
+                    <span class="badge-icon">⚜️</span>
+                    <span>World of Warcraft • Lightbringer-EU</span>
+                </div>
+                
+                <h1 class="hero-title animate-glow">
+                    <span class="title-sub">Champion of the Silver Hand</span>
+                    KOSSIAN
+                </h1>
+
+                <p class="hero-subtitle">
+                    A stalwart defender in the dark, wielding sacred light and relentless steel. Retribution in judgment, Holy in devotion.
+                </p>
+
+                <div class="hero-attributes">
+                    <div class="attribute-pill">
+                        <span class="pill-label">Class</span>
+                        <span class="pill-value gold-text">Paladin</span>
+                    </div>
+                    <div class="attribute-pill">
+                        <span class="pill-label">Specs</span>
+                        <span class="pill-value">Retribution / Holy</span>
+                    </div>
+                    <div class="attribute-pill">
+                        <span class="pill-label">Realm</span>
+                        <span class="pill-value">Lightbringer-EU</span>
+                    </div>
+                    <div class="attribute-pill">
+                        <span class="pill-label">Faction</span>
+                        <span class="pill-value alliance-blue">Alliance</span>
+                    </div>
+                </div>
+
+                <div class="hero-cta-group">
+                    <a href="#chronicle" class="btn btn-primary">
+                        <span class="btn-icon">📜</span>
+                        View Campaign Sagas
+                    </a>
+                    <a href="#altar" class="btn btn-secondary">
+                        <span class="btn-icon">🕯️</span>
+                        Invoke Altar of Light
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-scroll-hint">
+                <span class="scroll-text">Scroll to Explore Legend</span>
+                <span class="scroll-arrow">↓</span>
+            </div>
+        </section>
+
+        <!-- Legend Section (Character Card & Stats Shell) -->
+        <section id="legend" class="legend-section section-padding">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">The Hero's Legend</h2>
+                    <div class="gilded-divider"><span>⚜️</span></div>
+                    <p class="section-description">
+                        Forged through decades of cataclysmic wars across Azeroth, Outland, and the Shadowlands.
+                    </p>
+                </div>
+
+                <div class="legend-grid">
+                    <!-- Specialization Cards -->
+                    <div class="legend-card spec-card retribution-card">
+                        <div class="card-corner corner-tl"></div>
+                        <div class="card-corner corner-tr"></div>
+                        <div class="card-corner corner-bl"></div>
+                        <div class="card-corner corner-br"></div>
+
+                        <div class="spec-header">
+                            <span class="spec-icon">🗡️</span>
+                            <div class="spec-titles">
+                                <h3>Retribution</h3>
+                                <span class="spec-role">Primary Specialization • Damage</span>
+                            </div>
+                        </div>
+                        <p class="spec-desc">
+                            Delivers divine retribution to evil across every frontier. Wielder of holy wrath, smiting fiends with sacred blades and judgment flames.
+                        </p>
+                        <ul class="spec-features">
+                            <li><span class="feature-icon">✨</span> Templar's Verdict Mastery</li>
+                            <li><span class="feature-icon">🛡️</span> Crusade & Avenging Wrath</li>
+                            <li><span class="feature-icon">⚡</span> Divine Storm Frontline Cleave</li>
+                        </ul>
+                    </div>
+
+                    <div class="legend-card spec-card holy-card">
+                        <div class="card-corner corner-tl"></div>
+                        <div class="card-corner corner-tr"></div>
+                        <div class="card-corner corner-bl"></div>
+                        <div class="card-corner corner-br"></div>
+
+                        <div class="spec-header">
+                            <span class="spec-icon">✨</span>
+                            <div class="spec-titles">
+                                <h3>Holy</h3>
+                                <span class="spec-role">Secondary Specialization • Healer</span>
+                            </div>
+                        </div>
+                        <p class="spec-desc">
+                            A beacon of preservation amidst chaos. Channeling divine grace to mend mortal wounds and shield allies in battle.
+                        </p>
+                        <ul class="spec-features">
+                            <li><span class="feature-icon">🕊️</span> Light of Dawn Area Preservation</li>
+                            <li><span class="feature-icon">🌟</span> Holy Shock Immediate Grace</li>
+                            <li><span class="feature-icon">🛡️</span> Aura of Mercy Protection</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Stats & Realm Overview Panel -->
+                <div class="hero-stats-panel legend-card">
+                    <div class="card-corner corner-tl"></div>
+                    <div class="card-corner corner-tr"></div>
+                    <div class="card-corner corner-bl"></div>
+                    <div class="card-corner corner-br"></div>
+
+                    <h3 class="panel-title">Character Attributes & Victories</h3>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number gold-text">80</span>
+                            <span class="stat-label">Level Champion</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number gold-text">Lightbringer</span>
+                            <span class="stat-label">EU Realm Realm</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number gold-text">5</span>
+                            <span class="stat-label">Major Sagas Fought</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number gold-text">Unflinching</span>
+                            <span class="stat-label">Faith & Honor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Campaign Chronicle Section -->
+        <section id="chronicle" class="chronicle-section section-padding">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">Campaign Chronicle</h2>
+                    <div class="gilded-divider"><span>⚜️</span></div>
+                    <p class="section-description">
+                        An interactive history of Kossian's crusade through iconic World of Warcraft expansions.
+                    </p>
+                </div>
+
+                <!-- Filter Controls Container -->
+                <div id="chronicle-filters" class="filter-container">
+                    <button class="filter-btn active" data-filter="all">All Sagas</button>
+                    <button class="filter-btn" data-filter="wotlk">Wrath of the Lich King</button>
+                    <button class="filter-btn" data-filter="legion">Legion</button>
+                    <button class="filter-btn" data-filter="shadowlands">Shadowlands</button>
+                    <button class="filter-btn" data-filter="dragonflight">Dragonflight</button>
+                    <button class="filter-btn" data-filter="tww">The War Within</button>
+                </div>
+
+                <!-- Timeline Container -->
+                <div id="chronicle-timeline" class="chronicle-timeline">
+                    <!-- Timeline items will be rendered dynamically by JavaScript in Task 4 -->
+                    <div class="timeline-placeholder text-center">
+                        <p class="parchment-text">Loading campaign sagas from the Silver Hand archives...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Altar of Light Section -->
+        <section id="altar" class="altar-section section-padding">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">Altar of Light</h2>
+                    <div class="gilded-divider"><span>⚜️</span></div>
+                    <p class="section-description">
+                        Approach the altar and commune with sacred wisdom. Invoke to reveal holy incantations and paladin oaths.
+                    </p>
+                </div>
+
+                <div id="altar-pedestal" class="altar-pedestal legend-card">
+                    <div class="card-corner corner-tl"></div>
+                    <div class="card-corner corner-tr"></div>
+                    <div class="card-corner corner-bl"></div>
+                    <div class="card-corner corner-br"></div>
+
+                    <div class="pedestal-header">
+                        <div class="sacred-symbol">⚡</div>
+                        <h3 class="pedestal-title">Sacred Inscription</h3>
+                    </div>
+
+                    <div id="quote-display" class="quote-display">
+                        <blockquote class="quote-text">
+                            "Where shadow looms, the Holy Light shines brightest. Stand firm, champions of the Silver Hand!"
+                        </blockquote>
+                        <cite class="quote-author">— Kossian, Lightbringer-EU</cite>
+                    </div>
+
+                    <div class="altar-actions">
+                        <button id="invoke-btn" class="btn btn-primary btn-altar">
+                            <span class="btn-icon">⚡</span>
+                            Invoke the Light
+                        </button>
+                        <button id="copy-quote-btn" class="btn btn-secondary btn-altar" aria-label="Copy Quote to Clipboard">
+                            <span class="btn-icon">📋</span>
+                            Copy Inscription
+                        </button>
+                    </div>
+
+                    <div id="altar-feedback" class="altar-feedback" aria-live="polite"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <span class="brand-crest">⚔️</span>
+                <span class="footer-title">KOSSIAN</span>
+                <p class="footer-subtitle">Paladin of Lightbringer-EU • World of Warcraft</p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#hero">Overview</a>
+                <a href="#legend">Legend</a>
+                <a href="#chronicle">Chronicle</a>
+                <a href="#altar">Altar</a>
+            </div>
+
+            <div class="footer-legal">
+                <p>&copy; 2026 Kossian • Lightbringer-EU. Fan-crafted tribute inspired by World of Warcraft.</p>
+                <p class="disclaimer">World of Warcraft and Blizzard Entertainment are trademarks or registered trademarks of Blizzard Entertainment, Inc.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>

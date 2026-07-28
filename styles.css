@@ -1,0 +1,1009 @@
+/* ==========================================================================
+   KOSSIAN - PALADIN OF LIGHTBRINGER-EU
+   Dark Gothic & Sacred Gold CSS Design System
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties / Tokens
+   -------------------------------------------------------------------------- */
+:root {
+    /* Color Palette */
+    --bg-obsidian: #08090C;
+    --bg-obsidian-card: #0E1017;
+    --bg-obsidian-elevated: #141824;
+    --bg-obsidian-glass: rgba(14, 16, 23, 0.85);
+
+    --gold-radiant: #FFD700;
+    --gold-bright: #FFE55C;
+    --gold-muted: #C5A059;
+    --gold-dark: #8B7322;
+    --gold-glow: rgba(255, 215, 0, 0.35);
+    --gold-glow-intense: rgba(255, 215, 0, 0.7);
+
+    --parchment: #E2D5B7;
+    --parchment-bright: #F8EED9;
+    --parchment-muted: #A89F91;
+    --parchment-dark: #6C6456;
+
+    --border-gilded: #3A3223;
+    --border-gold-bright: #D4AF37;
+    --border-gold-glow: rgba(212, 175, 55, 0.5);
+
+    --accent-red: #9E1B1B;
+    --accent-red-glow: rgba(158, 27, 27, 0.4);
+    --accent-alliance: #2A5298;
+
+    /* Typography */
+    --font-title: 'Cinzel Decorative', 'Cinzel', serif;
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-quote: 'IM Fell English', serif;
+
+    /* Transitions & Animations */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-medium: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Shadows */
+    --shadow-gilded: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.15);
+    --shadow-gilded-hover: 0 8px 30px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   2. Global Resets & Base Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--bg-obsidian);
+    color: var(--parchment);
+    font-family: var(--font-body);
+}
+
+body {
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    background-color: var(--bg-obsidian);
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.05) 0%, transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(14, 16, 23, 0.8) 0%, var(--bg-obsidian) 100%);
+    background-attachment: fixed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-obsidian);
+    border-left: 1px solid var(--border-gilded);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gold-dark) 0%, var(--gold-muted) 50%, var(--gold-dark) 100%);
+    border-radius: 2px;
+    border: 1px solid var(--border-gilded);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-bright);
+    box-shadow: 0 0 10px var(--gold-radiant);
+}
+
+/* Ambient Overlays */
+.vignette-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+    z-index: 10;
+}
+
+.divine-flare-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    background: radial-gradient(circle at center, rgba(255, 234, 167, 0.8) 0%, rgba(255, 215, 0, 0.4) 40%, transparent 80%);
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    z-index: 100;
+}
+
+.divine-flare-overlay.active {
+    opacity: 1;
+    animation: divineFlash 0.8s ease-out forwards;
+}
+
+@keyframes divineFlash {
+    0% { opacity: 0; transform: scale(0.95); }
+    20% { opacity: 1; transform: scale(1.02); }
+    100% { opacity: 0; transform: scale(1); }
+}
+
+/* Utility Layout Containers */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-padding {
+    padding: 6rem 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.gold-text {
+    color: var(--gold-radiant);
+    text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.parchment-text {
+    color: var(--parchment);
+}
+
+.alliance-blue {
+    color: #64B5F6;
+    text-shadow: 0 0 8px rgba(100, 181, 246, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   3. Header & Navigation Bar
+   -------------------------------------------------------------------------- */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: var(--bg-obsidian-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-gilded);
+    transition: var(--transition-medium);
+}
+
+.nav-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 2rem;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--parchment-bright);
+}
+
+.brand-crest {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 6px var(--gold-radiant));
+}
+
+.brand-text {
+    font-family: var(--font-title);
+    font-weight: 900;
+    font-size: 1.35rem;
+    letter-spacing: 2px;
+    background: linear-gradient(180deg, var(--parchment-bright) 0%, var(--gold-radiant) 70%, var(--gold-muted) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-subtext {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    color: var(--parchment-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-left: 1px solid var(--border-gilded);
+    padding-left: 0.75rem;
+}
+
+.main-nav .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--parchment-muted);
+    transition: var(--transition-fast);
+    position: relative;
+    padding: 0.3rem 0;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-radiant), transparent);
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--gold-radiant);
+    text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}
+
+.audio-toggle-btn {
+    background: rgba(14, 16, 23, 0.9);
+    border: 1px solid var(--border-gilded);
+    color: var(--parchment);
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-fast);
+}
+
+.audio-toggle-btn:hover {
+    border-color: var(--gold-bright);
+    color: var(--gold-radiant);
+    box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.audio-toggle-btn.active {
+    border-color: var(--gold-radiant);
+    background: rgba(255, 215, 0, 0.1);
+    color: var(--gold-bright);
+}
+
+/* --------------------------------------------------------------------------
+   4. Hero Section
+   -------------------------------------------------------------------------- */
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 2rem 4rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+.ember-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.gilded-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(14, 16, 23, 0.8);
+    border: 1px solid var(--border-gilded);
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    font-family: var(--font-heading);
+    font-size: 0.825rem;
+    letter-spacing: 1.5px;
+    color: var(--gold-muted);
+    text-transform: uppercase;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.badge-icon {
+    color: var(--gold-radiant);
+}
+
+.hero-title {
+    font-family: var(--font-title);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 4px;
+    background: linear-gradient(180deg, #FFFFFF 0%, var(--parchment-bright) 35%, var(--gold-radiant) 75%, var(--gold-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-sub {
+    font-family: var(--font-heading);
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--gold-muted);
+    -webkit-text-fill-color: var(--gold-muted);
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--parchment);
+    max-width: 680px;
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.hero-attributes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.attribute-pill {
+    background: var(--bg-obsidian-card);
+    border: 1px solid var(--border-gilded);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+}
+
+.pill-label {
+    color: var(--parchment-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.pill-value {
+    font-weight: 700;
+    color: var(--parchment-bright);
+}
+
+.hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   5. Buttons & Interactivity
+   -------------------------------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.8rem;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold-dark) 100%);
+    color: var(--bg-obsidian);
+    border: 1px solid var(--gold-radiant);
+    box-shadow: 0 0 15px var(--gold-glow);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(180deg, #FFF099 0%, var(--gold-radiant) 100%);
+    box-shadow: 0 0 25px var(--gold-glow-intense);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--bg-obsidian-card);
+    color: var(--parchment-bright);
+    border: 1px solid var(--border-gilded);
+}
+
+.btn-secondary:hover {
+    border-color: var(--gold-bright);
+    color: var(--gold-bright);
+    box-shadow: 0 0 15px var(--gold-glow);
+    transform: translateY(-2px);
+}
+
+.hero-scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--parchment-muted);
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 2;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
+}
+
+/* --------------------------------------------------------------------------
+   6. Section Headers & Gilded Dividers
+   -------------------------------------------------------------------------- */
+.section-header {
+    margin-bottom: 3.5rem;
+}
+
+.section-title {
+    font-family: var(--font-title);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--parchment-bright);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.gilded-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    color: var(--gold-radiant);
+}
+
+.gilded-divider::before,
+.gilded-divider::after {
+    content: '';
+    height: 1px;
+    width: 80px;
+    background: linear-gradient(90deg, transparent, var(--border-gold-bright), transparent);
+}
+
+.section-description {
+    font-size: 1.05rem;
+    color: var(--parchment-muted);
+    max-width: 640px;
+    margin: 0 auto;
+    font-family: var(--font-body);
+}
+
+/* --------------------------------------------------------------------------
+   7. Gothic Cards & Frames Design
+   -------------------------------------------------------------------------- */
+.legend-card {
+    position: relative;
+    background: var(--bg-obsidian-card);
+    border: 1px solid var(--border-gilded);
+    padding: 2.25rem;
+    border-radius: 4px;
+    box-shadow: var(--shadow-gilded);
+    transition: var(--transition-medium);
+    overflow: hidden;
+}
+
+.legend-card:hover {
+    border-color: var(--border-gold-bright);
+    box-shadow: var(--shadow-gilded-hover);
+}
+
+/* Ornate Corner Accents */
+.card-corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: var(--gold-muted);
+    border-style: solid;
+    pointer-events: none;
+    transition: var(--transition-fast);
+}
+
+.corner-tl { top: 4px; left: 4px; border-width: 2px 0 0 2px; }
+.corner-tr { top: 4px; right: 4px; border-width: 2px 2px 0 0; }
+.corner-bl { bottom: 4px; left: 4px; border-width: 0 0 2px 2px; }
+.corner-br { bottom: 4px; right: 4px; border-width: 0 2px 2px 0; }
+
+.legend-card:hover .card-corner {
+    border-color: var(--gold-radiant);
+    box-shadow: 0 0 6px var(--gold-radiant);
+}
+
+/* Legend Grid Layout */
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.spec-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(58, 50, 35, 0.6);
+}
+
+.spec-icon {
+    font-size: 2.2rem;
+}
+
+.spec-titles h3 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--gold-bright);
+}
+
+.spec-role {
+    font-size: 0.8rem;
+    color: var(--parchment-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.spec-desc {
+    color: var(--parchment);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+}
+
+.spec-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.spec-features li {
+    font-size: 0.875rem;
+    color: var(--parchment-bright);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Stats Panel */
+.hero-stats-panel {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.panel-title {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--gold-radiant);
+    text-align: center;
+    margin-bottom: 1.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.stat-item {
+    background: rgba(8, 9, 12, 0.6);
+    border: 1px solid var(--border-gilded);
+    padding: 1.25rem 1rem;
+    border-radius: 4px;
+}
+
+.stat-number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--parchment-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Campaign Chronicle Timeline Section
+   -------------------------------------------------------------------------- */
+.chronicle-section {
+    background: radial-gradient(circle at 50% 50%, rgba(14, 16, 23, 0.6) 0%, var(--bg-obsidian) 100%);
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 3.5rem;
+}
+
+.filter-btn {
+    background: var(--bg-obsidian-card);
+    border: 1px solid var(--border-gilded);
+    color: var(--parchment-muted);
+    padding: 0.6rem 1.4rem;
+    border-radius: 20px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.filter-btn:hover {
+    border-color: var(--gold-bright);
+    color: var(--gold-radiant);
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.filter-btn.active {
+    background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold-muted) 100%);
+    color: var(--bg-obsidian);
+    border-color: var(--gold-radiant);
+    font-weight: 700;
+    box-shadow: 0 0 15px var(--gold-glow);
+}
+
+.chronicle-timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.chronicle-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(180deg, transparent 0%, var(--border-gold-bright) 15%, var(--gold-radiant) 50%, var(--border-gold-bright) 85%, transparent 100%);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 0 2.5rem 3rem;
+    box-sizing: border-box;
+}
+
+.timeline-item.left {
+    left: 0;
+    text-align: right;
+}
+
+.timeline-item.right {
+    left: 50%;
+    text-align: left;
+}
+
+.timeline-marker {
+    position: absolute;
+    top: 1.5rem;
+    width: 20px;
+    height: 20px;
+    background: var(--bg-obsidian);
+    border: 2px solid var(--gold-radiant);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--gold-radiant);
+    z-index: 3;
+}
+
+.timeline-item.left .timeline-marker {
+    right: -10px;
+}
+
+.timeline-item.right .timeline-marker {
+    left: -10px;
+}
+
+.timeline-card {
+    background: var(--bg-obsidian-card);
+    border: 1px solid var(--border-gilded);
+    padding: 1.75rem;
+    border-radius: 4px;
+    box-shadow: var(--shadow-gilded);
+    transition: var(--transition-medium);
+}
+
+.timeline-card:hover {
+    border-color: var(--gold-bright);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-gilded-hover);
+}
+
+/* --------------------------------------------------------------------------
+   9. Altar of Light Section
+   -------------------------------------------------------------------------- */
+.altar-section {
+    position: relative;
+}
+
+.altar-pedestal {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    background: radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.08) 0%, var(--bg-obsidian-card) 70%);
+    border: 1px solid var(--border-gold-bright);
+    padding: 3.5rem 2.5rem;
+}
+
+.pedestal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.sacred-symbol {
+    font-size: 2.5rem;
+    color: var(--gold-radiant);
+    filter: drop-shadow(0 0 12px var(--gold-radiant));
+    animation: pulseSymbol 3s infinite alternate ease-in-out;
+}
+
+@keyframes pulseSymbol {
+    0% { transform: scale(1); filter: drop-shadow(0 0 8px var(--gold-glow)); }
+    100% { transform: scale(1.1); filter: drop-shadow(0 0 20px var(--gold-radiant)); }
+}
+
+.pedestal-title {
+    font-family: var(--font-title);
+    font-size: 1.6rem;
+    color: var(--gold-bright);
+    letter-spacing: 2px;
+}
+
+.quote-display {
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    background: rgba(8, 9, 12, 0.7);
+    border: 1px dashed var(--border-gilded);
+    border-radius: 4px;
+    transition: var(--transition-medium);
+}
+
+.quote-text {
+    font-family: var(--font-quote);
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-style: italic;
+    color: var(--parchment-bright);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+.quote-author {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--gold-muted);
+    letter-spacing: 1px;
+}
+
+.altar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn-altar {
+    min-width: 200px;
+}
+
+.altar-feedback {
+    margin-top: 1rem;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--gold-radiant);
+    min-height: 1.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   10. Footer Section
+   -------------------------------------------------------------------------- */
+.site-footer {
+    background: var(--bg-obsidian);
+    border-top: 1px solid var(--border-gilded);
+    padding: 3.5rem 0 2.5rem;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.footer-title {
+    font-family: var(--font-title);
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: var(--gold-radiant);
+}
+
+.footer-subtitle {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--parchment-muted);
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: var(--parchment-muted);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--gold-radiant);
+}
+
+.footer-legal {
+    font-size: 0.8rem;
+    color: var(--parchment-dark);
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+.footer-legal .disclaimer {
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   11. Responsive Media Queries
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .chronicle-timeline::before {
+        left: 20px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 3.5rem;
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+
+    .timeline-item.left,
+    .timeline-item.right {
+        left: 0;
+        text-align: left;
+    }
+
+    .timeline-item.left .timeline-marker,
+    .timeline-item.right .timeline-marker {
+        left: 10px;
+        right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .main-nav .nav-links {
+        gap: 1.25rem;
+    }
+
+    .hero-section {
+        padding-top: 10rem;
+    }
+
+    .hero-attributes {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-nav .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem 1rem;
+    }
+
+    .legend-card {
+        padding: 1.5rem;
+    }
+
+    .altar-pedestal {
+        padding: 2rem 1.25rem;
+    }
+}
