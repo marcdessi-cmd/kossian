@@ -775,12 +775,149 @@ body {
     border-radius: 4px;
     box-shadow: var(--shadow-gilded);
     transition: var(--transition-medium);
+    text-align: left;
 }
 
 .timeline-card:hover {
     border-color: var(--gold-bright);
     transform: translateY(-4px);
     box-shadow: var(--shadow-gilded-hover);
+}
+
+.timeline-card-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(58, 50, 35, 0.6);
+}
+
+.timeline-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.timeline-era {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--gold-radiant);
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid var(--gold-dark);
+    padding: 0.2rem 0.65rem;
+    border-radius: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.timeline-location {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    color: var(--parchment-muted);
+    letter-spacing: 1px;
+}
+
+.timeline-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    color: var(--gold-bright);
+    letter-spacing: 1px;
+    margin-top: 0.25rem;
+    text-shadow: 0 0 8px var(--gold-glow);
+}
+
+.timeline-description {
+    color: var(--parchment);
+    font-size: 0.925rem;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+}
+
+/* Boss Victory Trophy Badge */
+.boss-trophy-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    background: linear-gradient(135deg, rgba(20, 24, 36, 0.9) 0%, rgba(14, 16, 23, 0.95) 100%);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    border-left: 3px solid var(--gold-radiant);
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.25rem;
+    transition: var(--transition-fast);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.timeline-card:hover .boss-trophy-badge {
+    border-color: var(--gold-bright);
+    border-left-color: var(--gold-bright);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+}
+
+.trophy-icon {
+    font-size: 1.6rem;
+    filter: drop-shadow(0 0 6px var(--gold-radiant));
+    flex-shrink: 0;
+}
+
+.trophy-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.trophy-boss {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--parchment-bright);
+    letter-spacing: 0.5px;
+}
+
+.trophy-status {
+    font-size: 0.78rem;
+    color: var(--parchment-muted);
+    font-style: italic;
+}
+
+/* Tag Badges */
+.timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag-badge {
+    background: rgba(8, 9, 12, 0.7);
+    border: 1px solid var(--border-gilded);
+    color: var(--parchment-muted);
+    font-size: 0.75rem;
+    font-family: var(--font-body);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    transition: var(--transition-fast);
+}
+
+.tag-badge:hover {
+    border-color: var(--gold-muted);
+    color: var(--gold-bright);
+}
+
+/* Animation on timeline filter change */
+@keyframes fadeInTimeline {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInTimeline 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* --------------------------------------------------------------------------

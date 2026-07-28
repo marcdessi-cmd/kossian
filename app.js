@@ -420,17 +420,238 @@ function initAudioControls() {
 }
 
 // Expose public sound synthesis API globally on window object
-window.playHolyBell = playHolyBell;
-window.playSpellFlash = playSpellFlash;
-window.toggleAmbientDrone = toggleAmbientDrone;
-window.getAudioContext = getAudioContext;
+if (typeof window !== 'undefined') {
+    window.playHolyBell = playHolyBell;
+    window.playSpellFlash = playSpellFlash;
+    window.toggleAmbientDrone = toggleAmbientDrone;
+    window.getAudioContext = getAudioContext;
+}
 
 /* ==========================================================================
-   3. Main Application Initialization
+   3. Campaign Chronicle Data & Filtering Engine
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
-    initEmberCanvas();
-    initAudioControls();
-});
+/**
+ * Historical Sagas of Kossian, Paladin of Lightbringer-EU.
+ * Spans iconic World of Warcraft expansions with boss kill trophies.
+ */
+const CAMPAIGN_DATA = [
+    {
+        id: 'wotlk',
+        category: 'classic',
+        title: 'Wrath of the Lich King',
+        location: 'Northrend • Icecrown Citadel',
+        era: '2008 – 2010',
+        description: 'Joined the Argent Crusade upon the frozen shores of Northrend. Wielding divine retribution, Kossian stood atop the Frozen Throne during the siege of Icecrown Citadel to vanquish Arthas Menethil and break the Scourge command.',
+        bossTrophy: {
+            icon: '👑',
+            name: 'The Lich King',
+            status: 'Vanquished • Icecrown Citadel'
+        },
+        tags: ['Icecrown Citadel', 'Argent Crusade', 'Undead Scourge', 'Retribution']
+    },
+    {
+        id: 'legion',
+        category: 'classic',
+        title: 'Legion',
+        location: 'Broken Isles & Argus • Antorus',
+        era: '2016 – 2018',
+        description: 'As High Lord of the Order of the Silver Hand at Netherlight Temple, Kossian led paladins against the Burning Legion. Traversed the demonic realm of Argus to strike down Argus the Unmaker in Antorus, the Burning Throne.',
+        bossTrophy: {
+            icon: '🔥',
+            name: 'Argus the Unmaker',
+            status: 'Banished • Antorus, the Burning Throne'
+        },
+        tags: ['Order of the Silver Hand', 'Burning Legion', 'High Lord', 'Holy/Retribution']
+    },
+    {
+        id: 'shadowlands',
+        category: 'modern',
+        title: 'Shadowlands',
+        location: 'Shadowlands • Sepulcher of the First Ones',
+        era: '2020 – 2022',
+        description: 'Breached the realm of Death to defend the cosmos from reality rewrite. Aligned with the Kyrian Covenant of Bastion, channeling holy radiance into Zereth Mortis to seal away Zovaal the Jailer.',
+        bossTrophy: {
+            icon: '💀',
+            name: 'Zovaal, The Jailer',
+            status: 'Bound • Sepulcher of the First Ones'
+        },
+        tags: ['Zereth Mortis', 'Kyrian Covenant', 'First Ones', 'Holy Light']
+    },
+    {
+        id: 'dragonflight',
+        category: 'modern',
+        title: 'Dragonflight',
+        location: 'Dragon Isles • Amirdrassil',
+        era: '2022 – 2024',
+        description: 'Heeded the awakening of the Dragon Isles, battling alongside the Dragon Aspects. Stood as a holy bulwark at the Emerald Dream to extinguish Fyrakk the Blazing before the World Tree Amirdrassil.',
+        bossTrophy: {
+            icon: '🐉',
+            name: 'Fyrakk the Blazing',
+            status: 'Extinguished • Amirdrassil, the Dream\'s Hope'
+        },
+        tags: ['Amirdrassil', 'Dragon Aspects', 'Primalist Fall', 'Retribution']
+    },
+    {
+        id: 'tww',
+        category: 'modern',
+        title: 'The War Within',
+        location: 'Khaz Algar • Nerub\'ar Palace',
+        era: '2024 – Present',
+        description: 'Descended into the subterranean depths of Khaz Algar and the Radiant Song of Hallowfall. Defending the Arathi sacred flames and breaching Nerub\'ar Palace to dethrone Queen Ansurek.',
+        bossTrophy: {
+            icon: '🕷️',
+            name: 'Queen Ansurek',
+            status: 'Shattered • Nerub\'ar Palace, Azj-Kahet'
+        },
+        tags: ['Khaz Algar', 'Hallowfall Arathi', 'Sacred Flame', 'Paladin Champion']
+    }
+];
+
+/**
+ * Dynamic chronicle renderer.
+ * Filters campaign sagas by category/expansion and populates #chronicle-timeline DOM element.
+ * @param {string} filterCategory - 'all', 'classic', 'modern', or specific expansion ID
+ */
+function renderChronicle(filterCategory = 'all') {
+    const timelineContainer = document.getElementById('chronicle-timeline');
+    if (!timelineContainer) return;
+
+    // Filter items
+    const filteredData = CAMPAIGN_DATA.filter(saga => {
+        if (filterCategory === 'all') return true;
+        if (saga.category === filterCategory) return true;
+        if (saga.id === filterCategory) return true;
+        return false;
+    });
+
+    if (filteredData.length === 0) {
+        timelineContainer.innerHTML = `
+            <div class="timeline-placeholder text-center">
+                <p class="parchment-text">No campaign sagas found for the selected filter.</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Build timeline cards HTML
+    const cardsHTML = filteredData.map((saga, index) => {
+        const positionClass = (index % 2 === 0) ? 'left' : 'right';
+        const tagsHTML = saga.tags.map(tag => `<span class="tag-badge">${escapeHTML(tag)}</span>`).join('');
+
+        return `
+            <div class="timeline-item ${positionClass} animate-fade-in">
+                <div class="timeline-marker" title="${escapeHTML(saga.title)}"></div>
+                <div class="timeline-card legend-card">
+                    <div class="card-corner corner-tl"></div>
+                    <div class="card-corner corner-tr"></div>
+                    <div class="card-corner corner-bl"></div>
+                    <div class="card-corner corner-br"></div>
+
+                    <div class="timeline-card-header">
+                        <div class="timeline-meta">
+                            <span class="timeline-era">${escapeHTML(saga.era)}</span>
+                            <span class="timeline-location">${escapeHTML(saga.location)}</span>
+                        </div>
+                        <h3 class="timeline-title">${escapeHTML(saga.title)}</h3>
+                    </div>
+
+                    <p class="timeline-description">${escapeHTML(saga.description)}</p>
+
+                    <div class="boss-trophy-badge">
+                        <span class="trophy-icon">${saga.bossTrophy.icon}</span>
+                        <div class="trophy-info">
+                            <span class="trophy-boss">${escapeHTML(saga.bossTrophy.name)}</span>
+                            <span class="trophy-status">${escapeHTML(saga.bossTrophy.status)}</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-tags">
+                        ${tagsHTML}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    timelineContainer.innerHTML = cardsHTML;
+}
+
+/**
+ * Escapes HTML characters to prevent XSS injection.
+ * @param {string} str 
+ * @returns {string}
+ */
+function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, match => {
+        const escapeMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        };
+        return escapeMap[match];
+    });
+}
+
+/**
+ * Binds event handlers for chronicle filter buttons in #chronicle-filters.
+ * Plays Holy Bell sound upon selection.
+ */
+function initChronicleFilters() {
+    const filterContainer = document.getElementById('chronicle-filters');
+    if (!filterContainer) return;
+
+    const filterButtons = filterContainer.querySelectorAll('.filter-btn');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const filterCategory = button.getAttribute('data-filter') || 'all';
+
+            // Remove active class from all buttons and set active on clicked
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Play sacred sound chime
+            if (typeof window.playHolyBell === 'function') {
+                window.playHolyBell();
+            }
+
+            // Render filtered timeline
+            renderChronicle(filterCategory);
+        });
+    });
+}
+
+// Expose chronicle API globally on window object
+if (typeof window !== 'undefined') {
+    window.CAMPAIGN_DATA = CAMPAIGN_DATA;
+    window.renderChronicle = renderChronicle;
+    window.initChronicleFilters = initChronicleFilters;
+}
+
+/* ==========================================================================
+   4. Main Application Initialization
+   ========================================================================== */
+
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initEmberCanvas();
+        initAudioControls();
+        renderChronicle('all');
+        initChronicleFilters();
+    });
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        CAMPAIGN_DATA,
+        renderChronicle,
+        initChronicleFilters,
+        escapeHTML
+    };
+}
+
 
